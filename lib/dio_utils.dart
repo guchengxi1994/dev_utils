@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class DioUtils {
   // ignore: prefer_final_fields
@@ -18,7 +17,7 @@ class DioUtils {
           queryParameters: params, options: options, cancelToken: cancelToken);
       return response;
     } on Exception catch (e) {
-      debugPrint('getHttp exception: $e');
+      print('getHttp exception: $e');
       return null;
     }
   }
@@ -33,7 +32,7 @@ class DioUtils {
           cancelToken: cancelToken);
       return response;
     } on Exception catch (e) {
-      debugPrint('putHttp exception: $e');
+      print('putHttp exception: $e');
       return null;
     }
   }
@@ -48,7 +47,7 @@ class DioUtils {
           cancelToken: cancelToken);
       return response;
     } on Exception catch (e) {
-      debugPrint('postHttp exception: $e');
+      print('postHttp exception: $e');
       return null;
     }
   }
