@@ -1,3 +1,3 @@
 library dev_utils;
 
-export './mixin.dart';
+export 'api/mixin.dart';

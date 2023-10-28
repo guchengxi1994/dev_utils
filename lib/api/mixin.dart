@@ -1,7 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:dev_utils/base_entity.dart';
-import 'package:dev_utils/dio_utils.dart';
+import 'package:dev_utils/api/base_entity.dart';
+import 'package:dev_utils/api/dio_utils.dart';
+import 'package:dev_utils/result.dart';
 import 'package:dio/dio.dart';
 
 const HTTPOK = 20000;
@@ -16,13 +17,14 @@ mixin HttpMixin<Q extends BaseRequest, R extends BaseResponse> on BaseRequest {
     Map<String, dynamic> queryParams =
         params == null ? {} : params as Map<String, dynamic>;
     queryParams["id"] = toJson()['id'];
-    Response? r = await dioUtils.get(url,
+    Result<Response?, String> result = await dioUtils.get(url,
         params: queryParams, options: options, cancelToken: cancelToken);
-    if (r != null) {
-      if (r.data['code'] != HTTPOK && onError != null) {
+
+    if (result.data != null) {
+      if (result.data!.data['code'] != HTTPOK && onError != null) {
         onError();
       }
-      return BaseResponse.fromJson(r.data['data']) as R;
+      return BaseResponse.fromJson(result.data!.data['data']) as R;
     }
     return null;
   }

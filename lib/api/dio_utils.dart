@@ -1,3 +1,4 @@
+import 'package:dev_utils/result.dart';
 import 'package:dio/dio.dart';
 
 class DioUtils {
@@ -10,45 +11,53 @@ class DioUtils {
     _dio ??= Dio();
   }
 
+  setBaseUrl(String s) {
+    _dio!.options.baseUrl = s;
+  }
+
+  addInterceptor<T extends Interceptor>(T t) {
+    _dio!.interceptors.add(t);
+  }
+
   ///get请求方法
-  get(url, {params, options, cancelToken}) async {
+  Future<Result<Response?, String>> get(url,
+      {params, options, cancelToken}) async {
     try {
       Response response = await _dio!.get(url,
           queryParameters: params, options: options, cancelToken: cancelToken);
-      return response;
+      return Result(data: response, err: null);
     } on Exception catch (e) {
-      print('getHttp exception: $e');
-      return null;
+      return Result(data: null, err: e.toString());
     }
   }
 
   ///put请求方法
-  put(url, {data, params, options, cancelToken}) async {
+  Future<Result<Response?, String>> put(url,
+      {data, params, options, cancelToken}) async {
     try {
       Response response = await _dio!.put(url,
           data: data,
           queryParameters: params,
           options: options,
           cancelToken: cancelToken);
-      return response;
+      return Result(data: response, err: null);
     } on Exception catch (e) {
-      print('putHttp exception: $e');
-      return null;
+      return Result(data: null, err: e.toString());
     }
   }
 
   ///post请求
-  post(url, {data, params, options, cancelToken}) async {
+  Future<Result<Response?, String>> post(url,
+      {data, params, options, cancelToken}) async {
     try {
       Response response = await _dio!.post(url,
           data: data,
           queryParameters: params,
           options: options,
           cancelToken: cancelToken);
-      return response;
+      return Result(data: response, err: null);
     } on Exception catch (e) {
-      print('postHttp exception: $e');
-      return null;
+      return Result(data: null, err: e.toString());
     }
   }
 
