@@ -1,4 +1,3 @@
-import 'package:dev_utils/api/base_entity.dart';
 import 'package:dev_utils/dev_utils.dart';
 
 class Req extends BaseRequest with HttpMixin {

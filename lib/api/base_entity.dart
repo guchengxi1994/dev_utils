@@ -5,17 +5,20 @@ abstract class BaseRequest {
 class BaseResponse {
   int? count;
   List? records;
-  Object? obj;
+  Object? data;
 
   BaseResponse.fromJson(Map<String, dynamic> json) {
-    count = json['count'];
-    if (json['records'] != null) {
-      records = [];
-      json['records'].forEach((v) {
-        records!.add(v);
-      });
+    if (json['count'] != null) {
+      count = json['count'];
+      if (json['records'] != null) {
+        records = [];
+        json['records'].forEach((v) {
+          records!.add(v);
+        });
+      }
+    } else {
+      data = json;
     }
-    obj = json['obj'];
   }
 
   Map<String, dynamic> toJson() {
@@ -24,7 +27,7 @@ class BaseResponse {
     if (records != null) {
       data['records'] = records!.map((v) => v).toList();
     }
-    data['obj'] = obj;
+    data['data'] = data;
     return data;
   }
 }
